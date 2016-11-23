@@ -8,7 +8,7 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk ${FILE_PATH}
   n # new partition
   p # primary partition
   1 # partition number 1
-    # default - start at beginning of disk 
+    # default - start at beginning of disk
     # default - end at end of disk
   p # print the in-memory partition table
   w # write the partition table
@@ -27,8 +27,8 @@ SECTOR_SIZE=`fdisk -lu ${FILE_PATH} | grep Units | awk '{print $9}'`
 echo "SECTOR_SIZE ${SECTOR_SIZE}"
 
 # calculate offset
-echo "LOOP_OFFSET=$((${START} + ${SECTOR_SIZE}))"
-LOOP_OFFSET=$((${START} + ${SECTOR_SIZE}))
+echo "LOOP_OFFSET=${START} * ${SECTOR_SIZE}"
+LOOP_OFFSET=$((${START} * ${SECTOR_SIZE}))
 echo "LOOP_OFFSET ${LOOP_OFFSET}"
 
 # create loop device

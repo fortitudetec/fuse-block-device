@@ -90,7 +90,10 @@ public class BlockDeviceFuseFS extends FuseStubFS {
     LOG.info("getattr path {}", path);
     try {
       if (isRoot(path)) {
-        stat.st_mode.set(FileStat.S_IFDIR);
+        stat.st_mode.set(FileStat.S_IFDIR | 0777);
+        // stat.st_size.set(1);
+        // stat.st_gid.set(1000);
+        // stat.st_uid.set(1000);
         return 0;
       }
       String blockDeviceId = getBlockDeviceId(path);
@@ -98,6 +101,8 @@ public class BlockDeviceFuseFS extends FuseStubFS {
         long length = blockDeviceManager.getLength(blockDeviceId);
         stat.st_mode.set(FileStat.S_IFREG | 0777);
         stat.st_size.set(length);
+        // stat.st_gid.set(1000);
+        // stat.st_uid.set(1000);
         return 0;
       }
       return -ErrorCodes.ENOENT();
